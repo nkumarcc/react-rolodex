@@ -13,7 +13,6 @@ const useContactList = () => {
 
   useEffect(() => {
     // Save contact list to local storage whenever it changes
-    console.log('running in setting localstorage', contactList);
     localStorage.setItem('contactList', JSON.stringify(contactList));
   }, [contactList]);
 
