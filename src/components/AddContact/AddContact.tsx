@@ -2,12 +2,14 @@ import React, { FC } from 'react';
 import { AddContactWrapper } from './AddContact.styled';
 import useContactList from '../../hooks/useContactList';
 import { useFormik } from 'formik';
+import { useNavigate } from 'react-router-dom';
 
 interface AddContactProps {}
 
 const AddContact: FC<AddContactProps> = () => {
 
    const { addContact } = useContactList();
+   const navigate = useNavigate();
 
    const formik = useFormik({
       initialValues: {
@@ -33,6 +35,7 @@ const AddContact: FC<AddContactProps> = () => {
             /> 
             <button type="submit">Add Contact</button>
          </form>
+         <button onClick={() => navigate('/')}>Return to List</button>
       </AddContactWrapper>
    );
 }
