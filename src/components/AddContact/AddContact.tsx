@@ -16,7 +16,7 @@ const AddContact: FC<AddContactProps> = () => {
         name: '',
       },
       onSubmit: values => {
-        addContact({ id: 1, name: values.name });
+        addContact({ user_id: 1, name: values.name, relationship: 'friend' });
       },
     });
 
