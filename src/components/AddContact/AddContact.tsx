@@ -1,4 +1,6 @@
 import React, { FC } from 'react';
+import { Button, TextInput } from '@mantine/core';
+import { TransformedValues, useForm } from '@mantine/form';
 import { AddContactWrapper } from './AddContact.styled';
 import useContactList from '../../hooks/useContactList';
 import { useFormik } from 'formik';
@@ -11,31 +13,21 @@ const AddContact: FC<AddContactProps> = () => {
    const { addContact } = useContactList();
    const navigate = useNavigate();
 
-   const formik = useFormik({
-      initialValues: {
-        name: '',
-      },
-      onSubmit: values => {
-        addContact({ user_id: 1, name: values.name, relationship: 'friend' });
-      },
-    });
+   const form = useForm({
+      initialValues: { name: '' },
+   });
+
+   const handleSubmit = (values: TransformedValues<typeof form>) => {
+      addContact({ user_id: 1, name: values.name, relationship: 'friend' });
+   };
 
    return (
       <AddContactWrapper>
-         <form onSubmit={formik.handleSubmit}>
-            <label htmlFor="name">
-               Name:
-            </label>
-            <input
-               id="name"
-               name="name"
-               type="text"
-               onChange={formik.handleChange}
-               value={formik.values.name}
-            /> 
-            <button type="submit">Add Contact</button>
+         <form onSubmit={form.onSubmit(handleSubmit)}>
+            <TextInput label="Name:" placeholder="Name" {...form.getInputProps('name')} />
+            <Button type="submit">Add Contact</Button>
          </form>
-         <button onClick={() => navigate('/')}>Return to List</button>
+         <Button onClick={() => navigate('/')}>Return to List</Button>
       </AddContactWrapper>
    );
 }

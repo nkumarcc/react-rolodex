@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react';
+import { Button } from '@mantine/core';
 import { ListWrapper } from './List.styled';
 import useContactList from '../../hooks/useContactList';
 import { useNavigate } from 'react-router-dom';
@@ -16,7 +17,7 @@ const List: FC<ListProps> = () => {
          <ul>
             {contactList.map((item, index) => ( <li key={index}>{item.name}</li> ))}
          </ul>
-         <button onClick={() => navigate('/add')}>Add New Contact</button>
+         <Button onClick={() => navigate('/add')}>Add New Contact</Button>
       </ListWrapper>
    );
    
