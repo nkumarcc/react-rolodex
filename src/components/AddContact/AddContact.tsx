@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Box, Button, TextInput } from '@mantine/core';
+import { Box, Button, Space, Stack, TextInput, Textarea } from '@mantine/core';
 import { TransformedValues, useForm } from '@mantine/form';
 import { AddContactWrapper } from './AddContact.styled';
 import useContactList from '../../hooks/useContactList';
@@ -13,22 +13,31 @@ const AddContact: FC<AddContactProps> = () => {
    const navigate = useNavigate();
 
    const form = useForm({
-      initialValues: { name: '' },
+      initialValues: { name: '', relationship: '', notes: '' },
    });
 
    const handleSubmit = (values: TransformedValues<typeof form>) => {
-      addContact({ user_id: 1, name: values.name, relationship: 'friend' });
+      addContact({
+         user_id: 1,
+         name: values.name,
+         relationship: values.relationship,
+         notes: values.notes,
+      });
    };
 
    return (
       <AddContactWrapper>
-         <Box maw={340} mx="auto">
+         <Stack>
+            <h1>Add Contact</h1>
             <form onSubmit={form.onSubmit(handleSubmit)}>
                <TextInput label="Name:" placeholder="Name" {...form.getInputProps('name')} />
-               <Button type="submit">Add Contact</Button>
+               <TextInput label="Relationship:" placeholder="Relationship" {...form.getInputProps('relationship')} />
+               <Textarea label="Details:" placeholder="Details" {...form.getInputProps('notes')} />
+               <Space h="md"></Space>
+               <Button fullWidth type="submit">Add Contact</Button>
             </form>
             <Button onClick={() => navigate('/')}>Return to List</Button>
-         </Box>
+         </Stack>
       </AddContactWrapper>
    );
 }

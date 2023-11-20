@@ -1,25 +1,12 @@
 import { useState, useEffect } from 'react';
 import { createClient } from '@supabase/supabase-js';
 import { Database } from '../database.types';
+import { Contact } from '../models';
 
 const supabase = createClient<Database>(
   process.env.REACT_APP_SUPABASE_API_URL as string,
   process.env.REACT_APP_SUPABASE_API_KEY as string,
 );
-
-interface Contact {
-  contact_id?: number,
-  created_at?: string,
-  folder?: string | null,
-  frequency_num?: number | null,
-  frequency_unit?: Database["public"]["Enums"]["frequency_unit"] | null,
-  last_updated?: string,
-  name: string,
-  notes?: string | null,
-  relationship: string,
-  title?: string | null,
-  user_id: number,
-}
 
 const useContactList = () => {
   const [contactList, setContactList] = useState<Contact[]>([]);

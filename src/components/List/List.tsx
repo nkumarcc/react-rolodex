@@ -1,8 +1,9 @@
 import React, { FC, useState } from 'react';
-import { Button } from '@mantine/core';
+import { Button, Stack } from '@mantine/core';
 import { ListWrapper } from './List.styled';
 import useContactList from '../../hooks/useContactList';
 import { useNavigate } from 'react-router-dom';
+import ContactCard from './ContactCard/ContactCard';
 
 interface ListProps {}
 
@@ -13,11 +14,14 @@ const List: FC<ListProps> = () => {
 
    return (
       <ListWrapper>
-         <h1>Contact List</h1>
-         <ul>
-            {contactList.map((item, index) => ( <li key={index}>{item.name}</li> ))}
-         </ul>
-         <Button onClick={() => navigate('/add')}>Add New Contact</Button>
+         <Stack>
+            <h1>Contact List</h1>
+            {contactList.map(
+               (contact, index) =>
+                  (<ContactCard key={index} contact={contact}></ContactCard>)
+            )}
+            <Button onClick={() => navigate('/add')}>Add New Contact</Button>
+         </Stack>
       </ListWrapper>
    );
    
