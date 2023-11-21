@@ -16,9 +16,13 @@ const ContactCard: FC<ContactCardProps> = ({ contact }) => (
       style={{ margin: 'auto' }}
    >
       <Text> {contact.name} </Text>
-      <Text size="xs">
-         <b>Last Meetup Date:</b> {contact.name}
-      </Text>
+      {
+         contact.meetup?.length ? (
+            <Text size="xs">
+               <b>Last Meetup Date:</b> {contact.meetup[contact.meetup.length - 1].meet_date}
+            </Text>
+         ) : <></>
+      }
       <Text size="xs">
          <b>Relationship:</b> {contact.relationship}
       </Text>

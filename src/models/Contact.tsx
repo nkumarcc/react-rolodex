@@ -1,4 +1,5 @@
 import { Database } from '../database.types';
+import { Meetup } from './Meetup';
 
 export interface Contact {
     contact_id?: number,
@@ -12,4 +13,5 @@ export interface Contact {
     relationship: string,
     title?: string | null,
     user_id: number,
+    meetup?: Meetup[],
 }
