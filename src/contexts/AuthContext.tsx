@@ -32,7 +32,7 @@ export function AuthProvider({ children }: any) {
         return () => {
             authListener?.subscription.unsubscribe();
         };
-    });
+    }, []);
 
     return (
         <AuthContext.Provider value={state}>
