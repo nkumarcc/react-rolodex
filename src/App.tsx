@@ -6,12 +6,14 @@ import { Routes, Route } from 'react-router-dom';
 import AddContact from './components/AddContact/AddContact';
 import Login from './components/Login/Login';
 import Signup from './components/Signup/Signup';
-import { AppShell, Burger, Center, Container } from '@mantine/core';
+import { Anchor, AppShell, Burger, Center, Container } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import useAuth from './hooks/useAuth';
 
 function App() {
 
   const [opened, { toggle }] = useDisclosure();
+  const { logout } = useAuth();
 
   return (
     <>
@@ -24,6 +26,7 @@ function App() {
             <AppShell.Header>
               <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
               <div>Logo</div>
+              <Anchor  onClick={() => logout()}>Logout</Anchor>
             </AppShell.Header>
 
             <AppShell.Main>
