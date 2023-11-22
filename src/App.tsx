@@ -48,8 +48,6 @@ function App() {
                     </Route>
                   </Routes>
             </AppShell.Main>
-
-            <AppShell.Footer p="md">Footer</AppShell.Footer>
         </Container>
       </AppShell>
     </>
