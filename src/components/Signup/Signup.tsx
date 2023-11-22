@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
-import { Button, Stack, TextInput } from '@mantine/core';
-import { Space } from '@mantine/core';
+import { Anchor, Button, PasswordInput, Space, Stack, Text, TextInput } from '@mantine/core';
 import { TransformedValues, useForm } from '@mantine/form';
 import { SignupWrapper } from './Signup.styled';
 import useAuth from '../../hooks/useAuth';
@@ -33,11 +32,12 @@ const Signup: FC<SignupProps> = () => {
                <TextInput label="First Name:" placeholder="First Name" {...form.getInputProps('firstName')} />
                <TextInput label="Last Name:" placeholder="Last Name" {...form.getInputProps('lastName')} />
                <TextInput label="Email:" placeholder="Email" {...form.getInputProps('email')} />
-               <TextInput label="Password:" placeholder="Password" {...form.getInputProps('password')} />
-               <TextInput label="Confirm Password:" placeholder="Confirm Password" {...form.getInputProps('passwordConfirmation')} />
+               <PasswordInput label="Password:" placeholder="Password" {...form.getInputProps('password')} />
+               <PasswordInput label="Confirm Password:" placeholder="Confirm Password" {...form.getInputProps('passwordConfirmation')} />
                <Space h="md"></Space>
                <Button fullWidth type="submit">Sign Up</Button>
             </form>
+            <Text ta="center" size="sm">Already have an account? <Anchor href="/login">Log In</Anchor></Text>
          </Stack>
       </SignupWrapper>
    );

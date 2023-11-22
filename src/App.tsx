@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import List from './components/List/List';
 import logo from './logo.svg';
 import './App.css';
@@ -11,11 +11,13 @@ import { Anchor, AppShell, Burger, Center, Container, Switch } from '@mantine/co
 import { useDisclosure } from '@mantine/hooks';
 import useAuth from './hooks/useAuth';
 import AuthenticatedRoute from './components/Routes/AuthenticatedRoute';
+import { AuthContext } from './contexts/AuthContext';
 
 function App() {
 
   const [opened, { toggle }] = useDisclosure();
   const { logout } = useAuth();
+  const { user } = useContext(AuthContext);
 
   return (
     <>
@@ -28,7 +30,11 @@ function App() {
             <AppShell.Header>
               <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
               <div>Logo</div>
-              <Anchor  onClick={() => logout()}>Logout</Anchor>
+              {
+                user ? (
+                  <Anchor onClick={() => logout()}>Logout</Anchor>
+                ) : null
+              }
             </AppShell.Header>
 
             <AppShell.Main>
