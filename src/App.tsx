@@ -6,9 +6,11 @@ import { Routes, Route } from 'react-router-dom';
 import AddContact from './components/AddContact/AddContact';
 import Login from './components/Login/Login';
 import Signup from './components/Signup/Signup';
-import { Anchor, AppShell, Burger, Center, Container } from '@mantine/core';
+import ProtectedRoute from './components/Routes/ProtectedRoute';
+import { Anchor, AppShell, Burger, Center, Container, Switch } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import useAuth from './hooks/useAuth';
+import AuthenticatedRoute from './components/Routes/AuthenticatedRoute';
 
 function App() {
 
@@ -30,12 +32,16 @@ function App() {
             </AppShell.Header>
 
             <AppShell.Main>
-                <Routes>
-                  <Route path="/" element={<List />} />
-                  <Route path="/add" element={<AddContact />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/signup" element={<Signup />} />
-                </Routes>
+                  <Routes>
+                    <Route element={<ProtectedRoute />}>
+                      <Route path="/" element={<List />} />
+                      <Route path="/add" element={<AddContact />} />
+                    </Route>
+                    <Route element={<AuthenticatedRoute />}>
+                      <Route path="/login" element={<Login />} />
+                      <Route path="/signup" element={<Signup />} />
+                    </Route>
+                  </Routes>
             </AppShell.Main>
 
             <AppShell.Footer p="md">Footer</AppShell.Footer>
