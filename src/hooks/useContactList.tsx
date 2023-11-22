@@ -1,12 +1,6 @@
 import { useState, useEffect } from 'react';
-import { createClient } from '@supabase/supabase-js';
-import { Database } from '../database.types';
 import { Contact, Meetup } from '../models';
-
-const supabase = createClient<Database>(
-  process.env.REACT_APP_SUPABASE_API_URL as string,
-  process.env.REACT_APP_SUPABASE_API_KEY as string,
-);
+import { supabase } from '../singletons';
 
 const useContactList = () => {
   const [contactList, setContactList] = useState<Contact[]>([]);

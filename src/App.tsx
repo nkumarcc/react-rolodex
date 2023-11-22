@@ -4,6 +4,8 @@ import logo from './logo.svg';
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import AddContact from './components/AddContact/AddContact';
+import Login from './components/Login/Login';
+import Signup from './components/Signup/Signup';
 import { AppShell, Burger, Center, Container } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 
@@ -28,6 +30,8 @@ function App() {
                 <Routes>
                   <Route path="/" element={<List />} />
                   <Route path="/add" element={<AddContact />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/signup" element={<Signup />} />
                 </Routes>
             </AppShell.Main>
 
