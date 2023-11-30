@@ -1,15 +1,17 @@
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import { Button, Space, Stack, TextInput, Textarea } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
 import { TransformedValues, useForm } from '@mantine/form';
 import { AddContactWrapper } from './AddContact.styled';
 import useContactList from '../../hooks/useContactList';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../contexts/AuthContext';
 
 interface AddContactProps {}
 
 const AddContact: FC<AddContactProps> = () => {
 
+   const { appUser } = useContext(AuthContext);
    const { addContact } = useContactList();
    const navigate = useNavigate();
 
@@ -26,8 +28,9 @@ const AddContact: FC<AddContactProps> = () => {
    });
 
    const handleSubmit = (values: TransformedValues<typeof form>) => {
+      if (!appUser || !appUser.user_id) return;
       addContact({
-         user_id: 1,
+         user_id: appUser.user_id,
          name: values.name,
          title: values.title,
          relationship: values.relationship,
@@ -53,7 +56,7 @@ const AddContact: FC<AddContactProps> = () => {
                <DateInput label="First Meetup Date:" placeholder="Meetup date" {...form.getInputProps('meetupDate')} />
                <Textarea label="First Meetup Details:" placeholder="Meetup details" {...form.getInputProps('meetup')} />
                <Space h="md"></Space>
-               <Button fullWidth type="submit">Add Contact</Button>
+               <Button variant='light' fullWidth type="submit">Add Contact</Button>
             </form>
             <Button onClick={() => navigate('/')}>Return to List</Button>
          </Stack>
