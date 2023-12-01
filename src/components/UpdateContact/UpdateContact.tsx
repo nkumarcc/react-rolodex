@@ -7,7 +7,7 @@ import useContactList from '../../hooks/useContactList';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 import { Contact } from '../../models';
-import MeetupCard from '../MeetupList/MeetupCard/MeetupCard';
+import MeetupCard from './MeetupCard/MeetupCard';
 
 interface UpdateContactProps {}
 
