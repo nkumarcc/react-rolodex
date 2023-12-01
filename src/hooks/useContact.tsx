@@ -1,23 +1,10 @@
-import { useState, useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import { Contact, Meetup } from '../models';
 import { supabase } from '../singletons';
 import { AuthContext } from '../contexts/AuthContext';
 
 const useContact = () => {
   const { appUser } = useContext(AuthContext);
-  const [contactList, setContactList] = useState<Contact[]>([]);
-
-  useEffect(() => {
-    if (!appUser || !appUser.user_id) {
-      return;
-    }
-    supabase.from('contact').select(
-      'contact_id, folder, name, notes, relationship, title, meetup (meetup_id, details, location, meet_date)'
-    ).eq('user_id', appUser.user_id).then(
-      ({data, error}) => setContactList(data as Contact[])
-    );
-  }, [appUser]);
-
 
   const getContact = async (contactId: number): Promise<Contact | null> => {
     if (!appUser || !appUser.user_id) return null;
@@ -41,12 +28,9 @@ const useContact = () => {
   };
 
   const removeContact = (contactId: number) => {
-    setContactList((prevContactList) =>
-      prevContactList.filter((contact) => contact.contact_id !== contactId)
-    );
   };
 
-  return { contactList, addContact, updateContact, getContact, removeContact };
+  return { addContact, updateContact, getContact, removeContact };
 };
 
 export default useContact;
