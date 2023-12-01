@@ -2,11 +2,11 @@ import React, { FC, useContext, useEffect, useState } from 'react';
 import { UpdateContactWrapper } from './UpdateContact.styled';
 import { Button, Space, Stack, TextInput, Textarea } from '@mantine/core';
 import { TransformedValues, useForm } from '@mantine/form';
-import useContactList from '../../hooks/useContactList';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 import { Contact } from '../../models';
 import MeetupCard from './MeetupCard/MeetupCard';
+import useContact from '../../hooks/useContact';
 
 interface UpdateContactProps {}
 
@@ -14,9 +14,14 @@ const UpdateContact: FC<UpdateContactProps> = () => {
 
    const { contactId } = useParams();
    const { appUser } = useContext(AuthContext);
-   const { contactList, getContact, updateContact } = useContactList();
+   const { getContact, updateContact } = useContact();
    const [contact, setContact] = useState<Contact | null>(null);
    const navigate = useNavigate();
+   
+   useEffect(() => {
+      if (!contactId) return navigate('/');
+      getContact(parseInt(contactId)).then(contact => setContact(contact));
+   }, []);
 
    const form = useForm({
       initialValues: {
@@ -26,11 +31,6 @@ const UpdateContact: FC<UpdateContactProps> = () => {
          notes: '',
       },
    });
-
-   useEffect(() => {
-      if (!contactId) return navigate('/');
-      setContact(getContact(parseInt(contactId)));
-   }, [contactList]);
 
    useEffect(() => {
       if (!contact || !form) return;
@@ -50,7 +50,7 @@ const UpdateContact: FC<UpdateContactProps> = () => {
          title: values.title,
          relationship: values.relationship,
          notes: values.notes,
-      });
+      }).then((contact) => setContact(contact));
    };
            
    return (

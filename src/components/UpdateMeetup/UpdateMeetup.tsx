@@ -7,6 +7,7 @@ import useContactList from '../../hooks/useContactList';
 import { TransformedValues, useForm } from '@mantine/form';
 import { Button, Space, Stack, TextInput, Textarea } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
+import useContact from '../../hooks/useContact';
 
 interface UpdateMeetupProps {}
 
@@ -14,7 +15,8 @@ const UpdateMeetup: FC<UpdateMeetupProps> = () => {
 
    const { contactId, meetupId } = useParams();
    const { appUser } = useContext(AuthContext);
-   const { contactList, getContact, updateMeetup } = useContactList();
+   const { contactList, updateMeetup } = useContactList();
+   const { getContact } = useContact();
    const [contact, setContact] = useState<Contact | null>(null);
    const [meetup, setMeetup] = useState<Meetup | null>(null);
    const navigate = useNavigate();
@@ -29,9 +31,10 @@ const UpdateMeetup: FC<UpdateMeetupProps> = () => {
 
    useEffect(() => {
       if (!contactId || !meetupId) return navigate('/');
-      const contact = getContact(parseInt(contactId));
-      setContact(contact);
-      setMeetup(contact?.meetup?.find((meetup) => meetup.meetup_id === parseInt(meetupId)) || null);
+      getContact(parseInt(contactId)).then(contact => {
+         setContact(contact);
+         setMeetup(contact?.meetup?.find((meetup) => meetup.meetup_id === parseInt(meetupId)) || null);
+      });
    }, [contactList]);
 
    useEffect(() => {

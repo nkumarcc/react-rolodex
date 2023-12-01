@@ -7,6 +7,7 @@ import useContactList from '../../../hooks/useContactList';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthContext';
 import { Contact } from '../../../models';
+import useContact from '../../../hooks/useContact';
 
 interface AddMeetupProps {}
 
@@ -14,7 +15,8 @@ const AddMeetup: FC<AddMeetupProps> = () => {
 
    const { contactId } = useParams();
    const { appUser } = useContext(AuthContext);
-   const { contactList, getContact, addMeetup } = useContactList();
+   const { contactList, addMeetup } = useContactList();
+   const { getContact } = useContact();
    const [contact, setContact] = useState<Contact | null>(null);
    const navigate = useNavigate();
 
@@ -28,7 +30,7 @@ const AddMeetup: FC<AddMeetupProps> = () => {
 
    useEffect(() => {
       if (!contactId) return navigate('/');
-      setContact(getContact(parseInt(contactId)));
+      getContact(parseInt(contactId)).then(contact => setContact(contact));
    }, [contactList]);
 
    const handleSubmit = (values: TransformedValues<typeof form>) => {

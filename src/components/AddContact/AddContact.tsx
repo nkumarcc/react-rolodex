@@ -3,16 +3,16 @@ import { Button, Space, Stack, TextInput, Textarea } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
 import { TransformedValues, useForm } from '@mantine/form';
 import { AddContactWrapper } from './AddContact.styled';
-import useContactList from '../../hooks/useContactList';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
+import useContact from '../../hooks/useContact';
 
 interface AddContactProps {}
 
 const AddContact: FC<AddContactProps> = () => {
 
    const { appUser } = useContext(AuthContext);
-   const { addContact } = useContactList();
+   const { addContact } = useContact();
    const navigate = useNavigate();
 
    const form = useForm({
