@@ -13,6 +13,7 @@ import useAuth from './hooks/useAuth';
 import AuthenticatedRoute from './components/Routes/AuthenticatedRoute';
 import { AuthContext } from './contexts/AuthContext';
 import UpdateContact from './components/UpdateContact/UpdateContact';
+import UpdateMeetup from './components/UpdateMeetup/UpdateMeetup';
 
 function App() {
 
@@ -43,6 +44,7 @@ function App() {
                       <Route path="/" element={<List />} />
                       <Route path="/add" element={<AddContact />} />
                       <Route path="/update/:contactId" element={<UpdateContact />} />
+                      <Route path="/update/:contactId/:meetupId" element={<UpdateMeetup />} />
                     </Route>
                     <Route element={<AuthenticatedRoute />}>
                       <Route path="/login" element={<Login />} />

@@ -1,7 +1,6 @@
 import React, { FC, useContext, useEffect, useState } from 'react';
 import { UpdateContactWrapper } from './UpdateContact.styled';
 import { Button, Space, Stack, TextInput, Textarea } from '@mantine/core';
-import { DateInput } from '@mantine/dates';
 import { TransformedValues, useForm } from '@mantine/form';
 import useContactList from '../../hooks/useContactList';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -66,9 +65,10 @@ const UpdateContact: FC<UpdateContactProps> = () => {
                   <Space h="md"></Space>
                   <Button variant='light' fullWidth type="submit">Update Contact</Button>
                </form>
+               <h2>Meetups</h2>
                {contact?.meetup?.map(
                   (meetup, index) =>
-                     (<MeetupCard key={index} meetup={meetup} clickMeetup={() => navigate(`/update-meetup/${meetup.meetup_id}`)}></MeetupCard>)
+                     (<MeetupCard key={index} meetup={meetup} clickMeetup={() => navigate(`/update/${contactId}/${meetup.meetup_id}`)}></MeetupCard>)
                )}
                <Button onClick={() => navigate('/')}>Return to List</Button>
             </Stack>
