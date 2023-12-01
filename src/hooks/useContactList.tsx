@@ -52,12 +52,28 @@ const useContactList = () => {
       prevContactList.filter((contact) => contact.contact_id !== contactId)
     );
   };
+
+  const addMeetup = (contactId: number, meetup: Meetup) => {
+    if (!appUser || !appUser.user_id) {
+      return;
+    }
+    supabase.from('meetup').insert({ ...meetup, contact_id: contactId })
+      .select().then(() => {
+        setContactList((prevContactList: Contact[]) => {
+          const contactToUpdate = prevContactList.find(contact => contact.contact_id === contactId);
+          if (!contactToUpdate || !contactToUpdate.meetup) return prevContactList;
+          contactToUpdate.meetup.push(meetup);
+          return prevContactList;
+        });
+      });
+  };
+
   
   const updateMeetup = (meetupId: number, contactId: number, meetup: Meetup) => {
     if (!appUser || !appUser.user_id) {
       return;
     }
-    supabase.from('meetup').update({ ...meetup })
+    supabase.from('meetup').update(meetup)
       .match({ contact_id: contactId, meetup_id: meetupId })
       .select().then(() => {
         setContactList((prevContactList: Contact[]) => {
@@ -69,7 +85,7 @@ const useContactList = () => {
       });
   };
 
-  return { contactList, addContact, updateContact, getContact, removeContact, updateMeetup };
+  return { contactList, addContact, updateContact, getContact, removeContact, addMeetup, updateMeetup };
 };
 
 export default useContactList;

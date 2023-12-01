@@ -70,6 +70,7 @@ const UpdateContact: FC<UpdateContactProps> = () => {
                   (meetup, index) =>
                      (<MeetupCard key={index} meetup={meetup} clickMeetup={() => navigate(`/update/${contactId}/${meetup.meetup_id}`)}></MeetupCard>)
                )}
+               <Button variant='light' fullWidth onClick={() => navigate(`/update/${contactId}/add`)}>Add Meetup</Button>
                <Button onClick={() => navigate('/')}>Return to List</Button>
             </Stack>
       </UpdateContactWrapper>
