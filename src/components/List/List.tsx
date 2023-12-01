@@ -18,7 +18,7 @@ const List: FC<ListProps> = () => {
             <h1>Contact List</h1>
             {contactList.map(
                (contact, index) =>
-                  (<ContactCard key={index} contact={contact}></ContactCard>)
+                  (<ContactCard key={index} contact={contact} clickContact={() => navigate(`/update/${contact.contact_id}`)}></ContactCard>)
             )}
             <Button onClick={() => navigate('/add')}>Add New Contact</Button>
          </Stack>

@@ -5,15 +5,17 @@ import { Box, Card, Group, Text } from '@mantine/core';
 
 interface ContactCardProps {
    contact: Contact;
+   clickContact: () => void;
 }
 
-const ContactCard: FC<ContactCardProps> = ({ contact }) => (
+const ContactCard: FC<ContactCardProps> = ({ contact, clickContact }) => (
  <ContactCardWrapper>
    <Card
       shadow="sm"
       padding="sm"
       radius="md"
       style={{ margin: 'auto' }}
+      onClick={clickContact}
    >
       <Text> {contact.name} </Text>
       {

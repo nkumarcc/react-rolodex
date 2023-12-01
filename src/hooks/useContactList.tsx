@@ -20,7 +20,7 @@ const useContactList = () => {
 
 
   const getContact = (contactId: number) => {
-    return contactList.find((contact) => contact.contact_id === contactId);
+    return contactList.find((contact) => contact.contact_id === contactId) || null;
   }
 
   const addContact = (contact: Contact, meetup: Meetup) => {
@@ -34,6 +34,19 @@ const useContactList = () => {
       setContactList((prevContactList: Contact[]) => [...prevContactList, contact]);
     });
   };
+  
+  const updateContact = (contactId: number, contact: Contact) => {
+    if (!appUser || !appUser.user_id) {
+      return;
+    }
+    supabase.from('contact').update(contact).eq('contact_id', contactId).select().then(() => {
+      setContactList((prevContactList: Contact[]) => {
+        prevContactList[prevContactList.findIndex((contact) => contact.contact_id === contactId)] = contact;
+        return prevContactList;
+      });
+    });
+  };
+
 
   const removeContact = (contactId: number) => {
     setContactList((prevContactList) =>
@@ -41,7 +54,7 @@ const useContactList = () => {
     );
   };
 
-  return { contactList, addContact, getContact, removeContact };
+  return { contactList, addContact, updateContact, getContact, removeContact };
 };
 
 export default useContactList;
