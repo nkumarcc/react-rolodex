@@ -50,7 +50,8 @@ const UpdateContact: FC<UpdateContactProps> = () => {
          title: values.title,
          relationship: values.relationship,
          notes: values.notes,
-      }).then((contact) => setContact(contact));
+      }).then(() => getContact(parseInt(contactId)))
+      .then(updatedContact => setContact(updatedContact));
    };
            
    return (

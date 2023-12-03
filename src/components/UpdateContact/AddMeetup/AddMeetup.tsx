@@ -35,11 +35,12 @@ const AddMeetup: FC<AddMeetupProps> = () => {
 
    const handleSubmit = (values: TransformedValues<typeof form>) => {
       if (!contactId || !appUser || !appUser.user_id) return;
+      console.log('here');
       addMeetup(parseInt(contactId), {
          meet_date: values.meet_date,
          location: values.location,
          details: values.details,
-      });
+      }).then(console.log);
    };
 
    return (
@@ -47,9 +48,9 @@ const AddMeetup: FC<AddMeetupProps> = () => {
          <Stack>
             <h1>Add Meetup for {contact?.name}</h1>
             <form onSubmit={form.onSubmit(handleSubmit)}>
-               <TextInput label="Meetup Location:" placeholder="Meetup locations" {...form.getInputProps('meetupLocation')} />
-               <DateInput label="Meetup Date:" placeholder="Meetup date" {...form.getInputProps('meetupDate')} />
-               <Textarea label="Meetup Details:" placeholder="Meetup details" {...form.getInputProps('meetup')} />
+               <TextInput label="Meetup Location:" placeholder="Meetup locations" {...form.getInputProps('location')} />
+               <DateInput label="Meetup Date:" placeholder="Meetup date" {...form.getInputProps('meet_date')} />
+               <Textarea label="Meetup Details:" placeholder="Meetup details" {...form.getInputProps('details')} />
                <Space h="md"></Space>
                <Button variant='light' fullWidth type="submit">Add Meetup</Button>
             </form>
