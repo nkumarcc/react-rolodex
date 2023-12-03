@@ -1,24 +1,20 @@
-import { useState, useEffect, useContext } from 'react';
-import { Contact, Meetup } from '../models';
+import { useContext } from 'react';
+import { Contact } from '../models';
 import { supabase } from '../singletons';
 import { AuthContext } from '../contexts/AuthContext';
 
 const useContactList = () => {
   const { appUser } = useContext(AuthContext);
-  const [contactList, setContactList] = useState<Contact[]>([]);
 
-  useEffect(() => {
-    if (!appUser || !appUser.user_id) {
-      return;
-    }
-    supabase.from('contact').select(
+  const getContactList = async (): Promise<Contact[] | null> => {
+    if (!appUser || !appUser.user_id) return null;
+    const { data } = await supabase.from('contact').select(
       'contact_id, folder, name, notes, relationship, title, meetup (meetup_id, details, location, meet_date)'
-    ).eq('user_id', appUser.user_id).then(
-      ({data, error}) => setContactList(data as Contact[])
-    );
-  }, [appUser]);
+    ).eq('user_id', appUser.user_id);
+    return data as Contact[];
+  }
 
-  return { contactList };
+  return { getContactList };
 };
 
 export default useContactList;
