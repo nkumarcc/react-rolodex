@@ -3,7 +3,7 @@ import { UpdateMeetupWrapper } from './UpdateMeetup.styled';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 import { Contact, Meetup } from '../../models';
-import useContactList from '../../hooks/useContactList';
+import useMeetup from '../../hooks/useMeetup';
 import { TransformedValues, useForm } from '@mantine/form';
 import { Button, Space, Stack, TextInput, Textarea } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
@@ -15,7 +15,7 @@ const UpdateMeetup: FC<UpdateMeetupProps> = () => {
 
    const { contactId, meetupId } = useParams();
    const { appUser } = useContext(AuthContext);
-   const { contactList, updateMeetup } = useContactList();
+   const { getMeetup, updateMeetup } = useMeetup();
    const { getContact } = useContact();
    const [contact, setContact] = useState<Contact | null>(null);
    const [meetup, setMeetup] = useState<Meetup | null>(null);
@@ -33,9 +33,9 @@ const UpdateMeetup: FC<UpdateMeetupProps> = () => {
       if (!contactId || !meetupId) return navigate('/');
       getContact(parseInt(contactId)).then(contact => {
          setContact(contact);
-         setMeetup(contact?.meetup?.find((meetup) => meetup.meetup_id === parseInt(meetupId)) || null);
-      });
-   }, [contactList]);
+         return getMeetup(parseInt(meetupId));
+      }).then(meetup => setMeetup(meetup));
+   }, []);
 
    useEffect(() => {
       if (!meetup || !form) return;
@@ -48,7 +48,7 @@ const UpdateMeetup: FC<UpdateMeetupProps> = () => {
 
    const handleSubmit = (values: TransformedValues<typeof form>) => {
       if (!contactId || !meetupId || !appUser || !appUser.user_id) return;
-      updateMeetup(parseInt(meetupId), parseInt(contactId), {
+      updateMeetup(parseInt(meetupId), {
          meet_date: values.meet_date.toDateString(),
          location: values.location,
          details: values.details,

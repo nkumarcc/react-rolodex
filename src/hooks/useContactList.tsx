@@ -34,24 +34,7 @@ const useContactList = () => {
       });
   };
 
-  
-  const updateMeetup = (meetupId: number, contactId: number, meetup: Meetup) => {
-    if (!appUser || !appUser.user_id) {
-      return;
-    }
-    supabase.from('meetup').update(meetup)
-      .match({ contact_id: contactId, meetup_id: meetupId })
-      .select().then(() => {
-        setContactList((prevContactList: Contact[]) => {
-          const contactToUpdate = prevContactList.find(contact => contact.contact_id === contactId);
-          if (!contactToUpdate || !contactToUpdate.meetup) return prevContactList;
-          contactToUpdate.meetup[contactToUpdate.meetup.findIndex(meetup => meetup.meetup_id === meetupId)] = meetup;
-          return prevContactList;
-        });
-      });
-  };
-
-  return { contactList, addMeetup, updateMeetup };
+  return { contactList, addMeetup };
 };
 
 export default useContactList;
