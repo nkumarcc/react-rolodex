@@ -35,12 +35,11 @@ const AddMeetup: FC<AddMeetupProps> = () => {
 
    const handleSubmit = (values: TransformedValues<typeof form>) => {
       if (!contactId || !appUser || !appUser.user_id) return;
-      console.log('here');
       addMeetup(parseInt(contactId), {
          meet_date: values.meet_date,
          location: values.location,
          details: values.details,
-      }).then(console.log);
+      });
    };
 
    return (
