@@ -18,23 +18,7 @@ const useContactList = () => {
     );
   }, [appUser]);
 
-
-  const addMeetup = (contactId: number, meetup: Meetup) => {
-    if (!appUser || !appUser.user_id) {
-      return;
-    }
-    supabase.from('meetup').insert({ ...meetup, contact_id: contactId })
-      .select().then(() => {
-        setContactList((prevContactList: Contact[]) => {
-          const contactToUpdate = prevContactList.find(contact => contact.contact_id === contactId);
-          if (!contactToUpdate || !contactToUpdate.meetup) return prevContactList;
-          contactToUpdate.meetup.push(meetup);
-          return prevContactList;
-        });
-      });
-  };
-
-  return { contactList, addMeetup };
+  return { contactList };
 };
 
 export default useContactList;

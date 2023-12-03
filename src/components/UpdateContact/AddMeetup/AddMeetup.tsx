@@ -3,11 +3,11 @@ import { AddMeetupWrapper } from './AddMeetup.styled';
 import { Button, Space, Stack, TextInput, Textarea } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
 import { TransformedValues, useForm } from '@mantine/form';
-import useContactList from '../../../hooks/useContactList';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthContext';
 import { Contact } from '../../../models';
 import useContact from '../../../hooks/useContact';
+import useMeetup from '../../../hooks/useMeetup';
 
 interface AddMeetupProps {}
 
@@ -15,8 +15,8 @@ const AddMeetup: FC<AddMeetupProps> = () => {
 
    const { contactId } = useParams();
    const { appUser } = useContext(AuthContext);
-   const { contactList, addMeetup } = useContactList();
    const { getContact } = useContact();
+   const { addMeetup } = useMeetup();
    const [contact, setContact] = useState<Contact | null>(null);
    const navigate = useNavigate();
 
@@ -31,7 +31,7 @@ const AddMeetup: FC<AddMeetupProps> = () => {
    useEffect(() => {
       if (!contactId) return navigate('/');
       getContact(parseInt(contactId)).then(contact => setContact(contact));
-   }, [contactList]);
+   }, []);
 
    const handleSubmit = (values: TransformedValues<typeof form>) => {
       if (!contactId || !appUser || !appUser.user_id) return;
