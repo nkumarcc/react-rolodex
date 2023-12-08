@@ -27,7 +27,9 @@ const useContact = () => {
     return data as Contact;
   };
 
-  const removeContact = (contactId: number) => {
+  const removeContact = async (contactId: number): Promise<void> => {
+    if (!appUser || !appUser.user_id) return;
+    await supabase.from('contact').delete().eq('contact_id', contactId);
   };
 
   return { addContact, updateContact, getContact, removeContact };
