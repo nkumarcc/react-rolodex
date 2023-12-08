@@ -10,7 +10,8 @@ const useContactList = () => {
     if (!appUser || !appUser.user_id) return null;
     const { data } = await supabase.from('contact').select(
       'contact_id, folder, name, notes, relationship, title, meetup (meetup_id, details, location, meet_date)'
-    ).eq('user_id', appUser.user_id);
+    ).eq('user_id', appUser.user_id)
+    .order('meet_date', { foreignTable: 'meetup' });
     return data as Contact[];
   }
 
